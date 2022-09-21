@@ -1,13 +1,17 @@
 package es.xyz.pokedexgps.ui.pokedexGPS
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
 import android.media.MediaPlayer
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -44,7 +48,6 @@ class PokedexNavegationActivity : AppCompatActivity() {
     var media: MediaPlayer? = null
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPokedexNavegationBinding.inflate(layoutInflater)
@@ -52,6 +55,7 @@ class PokedexNavegationActivity : AppCompatActivity() {
 
         media = MediaPlayer.create(this, R.raw.road)
         media?.start()
+
 
         Glide.with(this).load(url).into(binding.imageView)
 
@@ -128,22 +132,32 @@ class PokedexNavegationActivity : AppCompatActivity() {
 
 
                 //Comparando la ubicación del primer location con las actualizaciones (m) se da instrucción para cada caso
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! < 40){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! < 5){
                     binding.textStatus.setTextColor(Color.DKGRAY)
                     binding.textStatus.text = "No hay Pokémon cerca"
 
                 }
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 40 && locationA?.distanceTo(locationResult?.lastLocation)!! < 75){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 5 && locationA?.distanceTo(locationResult?.lastLocation)!! < 10){
                     binding.textStatus.setTextColor(Color.GREEN)
                     binding.textStatus.text = "Se escucha un Pokémon cerca"
                 }
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 75 && locationA?.distanceTo(locationResult?.lastLocation)!! < 100){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 10 && locationA?.distanceTo(locationResult?.lastLocation)!! < 15){
                     binding.textStatus.setTextColor(Color.BLUE)
                     binding.textStatus.text = "Hay un Pokémon muy cerca!!"
                 }
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 100){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 15){
                     val intent = Intent(applicationContext, PokedexProfileActivity::class.java)
                     intent.putExtra("from", "Navegation")
+
+                    //Código que permite vibrar
+                    val vibrator = applicationContext?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+                    } else {
+                        vibrator.vibrate(200)
+                    }
+                    //----------
+                    
                     if(media!=null){
                         media?.stop()
                         media?.release()
