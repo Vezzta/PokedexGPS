@@ -132,20 +132,20 @@ class PokedexNavegationActivity : AppCompatActivity() {
 
 
                 //Comparando la ubicación del primer location con las actualizaciones (m) se da instrucción para cada caso
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! < 5){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! < 40){
                     binding.textStatus.setTextColor(Color.DKGRAY)
                     binding.textStatus.text = "No hay Pokémon cerca"
 
                 }
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 5 && locationA?.distanceTo(locationResult?.lastLocation)!! < 10){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 40 && locationA?.distanceTo(locationResult?.lastLocation)!! < 75){
                     binding.textStatus.setTextColor(Color.GREEN)
                     binding.textStatus.text = "Se escucha un Pokémon cerca"
                 }
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 10 && locationA?.distanceTo(locationResult?.lastLocation)!! < 15){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 75 && locationA?.distanceTo(locationResult?.lastLocation)!! < 100){
                     binding.textStatus.setTextColor(Color.BLUE)
                     binding.textStatus.text = "Hay un Pokémon muy cerca!!"
                 }
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 15){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 100){
                     val intent = Intent(applicationContext, PokedexProfileActivity::class.java)
                     intent.putExtra("from", "Navegation")
 
