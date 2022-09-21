@@ -144,6 +144,12 @@ class PokedexNavegationActivity : AppCompatActivity() {
                 if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 100){
                     val intent = Intent(applicationContext, PokedexProfileActivity::class.java)
                     intent.putExtra("from", "Navegation")
+                    if(media!=null){
+                        media?.stop()
+                        media?.release()
+                        media = null
+                    }
+                    finish()
                     startActivity(intent)
                     locationA = locationResult?.lastLocation
                 }
