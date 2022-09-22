@@ -120,17 +120,6 @@ class PokedexNavegationActivity : AppCompatActivity() {
                 super.onLocationResult(locationResult)
 
 
-                //Toast.makeText(applicationContext, locationA.toString() + "\n" +  locationResult?.locations.toString(), Toast.LENGTH_LONG).show()
-
-                //Toast.makeText(applicationContext, locationA?.distanceTo(locationResult?.lastLocation).toString(), Toast.LENGTH_LONG).show()
-
-                /*if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 15){
-                    val intent = Intent(applicationContext, PokedexProfileActivity::class.java)
-                    startActivity(intent)
-                    locationA = locationResult?.lastLocation
-                }*/
-
-
                 //Comparando la ubicación del primer location con las actualizaciones (m) se da instrucción para cada caso
                 if (locationA?.distanceTo(locationResult?.lastLocation)!! < 40){
                     binding.textStatus.setTextColor(Color.DKGRAY)
@@ -163,8 +152,12 @@ class PokedexNavegationActivity : AppCompatActivity() {
                         media?.release()
                         media = null
                     }
+                    locationA = null
                     finish()
                     startActivity(intent)
+
+                }else{
+
                     locationA = locationResult?.lastLocation
                 }
 
