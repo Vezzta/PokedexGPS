@@ -121,20 +121,20 @@ class PokedexNavegationActivity : AppCompatActivity() {
 
 
                 //Comparando la ubicación del primer location con las actualizaciones (m) se da instrucción para cada caso
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! < 40){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! < 40.0){
                     binding.textStatus.setTextColor(Color.DKGRAY)
                     binding.textStatus.text = "No hay Pokémon cerca"
 
                 }
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 40 && locationA?.distanceTo(locationResult?.lastLocation)!! < 75){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 40.0 && locationA?.distanceTo(locationResult?.lastLocation)!! < 75.0){
                     binding.textStatus.setTextColor(Color.GREEN)
                     binding.textStatus.text = "Se escucha un Pokémon cerca"
                 }
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 75 && locationA?.distanceTo(locationResult?.lastLocation)!! < 100){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 75.0 && locationA?.distanceTo(locationResult?.lastLocation)!! < 100.0){
                     binding.textStatus.setTextColor(Color.BLUE)
                     binding.textStatus.text = "Hay un Pokémon muy cerca!!"
                 }
-                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 100){
+                if (locationA?.distanceTo(locationResult?.lastLocation)!! >= 100.0){
                     val intent = Intent(applicationContext, PokedexProfileActivity::class.java)
                     intent.putExtra("from", "Navegation")
 
@@ -146,19 +146,21 @@ class PokedexNavegationActivity : AppCompatActivity() {
                         vibrator.vibrate(200)
                     }
                     //----------
-                    
+
+                    //detiene audio
                     if(media!=null){
                         media?.stop()
                         media?.release()
                         media = null
                     }
-                    locationA = null
+
+                    locationA = locationResult?.lastLocation //location inicial se vuelve la última tomada
                     finish()
                     startActivity(intent)
 
                 }else{
 
-                    locationA = locationResult?.lastLocation
+                    //Toast.makeText(applicationContext, locationA?.distanceTo(locationResult?.lastLocation)!!.toString() + " m", Toast.LENGTH_LONG).show()
                 }
 
             }
