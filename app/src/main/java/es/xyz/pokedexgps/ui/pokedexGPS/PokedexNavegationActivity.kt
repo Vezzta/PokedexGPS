@@ -160,7 +160,6 @@ class PokedexNavegationActivity : AppCompatActivity() {
 
                 }else{
 
-                    //
                     //Toast.makeText(applicationContext, locationA?.distanceTo(locationResult?.lastLocation)!!.toString() + " m", Toast.LENGTH_LONG).show()
                 }
 
